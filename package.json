@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "This is the Frontend of the Recepie Finder Web Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recepie-Finder/Frontend.git"
+  },
+  "author": "Muhammad Abdullah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Recepie-Finder/Frontend/issues"
+  },
+  "homepage": "https://github.com/Recepie-Finder/Frontend#readme"
+}
