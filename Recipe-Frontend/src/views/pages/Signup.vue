@@ -1,11 +1,15 @@
 <template>
-  <section class="h-100 bg-dark">
+  <section class="h-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
           <div
             class="card card-registration my-4"
-            style="border-radius: 1rem; background-color: #146166"
+            style="
+              border-radius: 1rem;
+              background-color: #146166;
+              box-shadow: 20px 20px 20px 20px #a8c7ae;
+            "
           >
             <div class="row g-0">
               <div class="col-xl-6 d-none d-xl-block">
@@ -21,76 +25,106 @@
               </div>
               <div class="col-xl-6">
                 <div class="card-body p-md-5 text-black">
-                  <h3 class="mb-5 text-uppercase">RF Registration Form</h3>
+                  <h3 class="mb-5 text-uppercase text-center font-weight-bold">
+                    RF Registration Form
+                  </h3>
 
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input
-                          type="text"
-                          id="form3Example1m"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example1m"
-                          >First name</label
-                        >
+                  <form @submit.prevent="handleSubmit">
+                    <div class="row">
+                      <div class="form-white col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input
+                            type="text"
+                            id="form3Example1m"
+                            class="form-control form-control-lg"
+                            placeholder="First Name"
+                            name="First Name"
+                            v-model="FirstName"
+                          />
+                          <label
+                            class="form-label"
+                            for="form3Example1m"
+                          ></label>
+                          <div v-show="submitted && !FirstName">
+                            This is a required field
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-white col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input
+                            type="text"
+                            id="form3Example1n"
+                            class="form-control form-control-lg"
+                            placeholder="Last Name"
+                            name="Last Name"
+                            v-model="LastName"
+                          />
+                          <label
+                            class="form-label"
+                            for="form3Example1n"
+                          ></label>
+                          <div v-show="submitted && !LastName">
+                            This is a required field
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input
-                          type="text"
-                          id="form3Example1n"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example1n"
-                          >Last name</label
-                        >
+
+                    <div class="form-outline form-white mb-4">
+                      <input
+                        type="email"
+                        id="typeEmailX"
+                        class="form-control form-control-lg"
+                        placeholder="Email"
+                        name="email"
+                        v-model="email"
+                      />
+                      <label class="form-label" for="typeEmailX"></label>
+                      <div v-show="submitted && !email">
+                        This is a required field
                       </div>
                     </div>
-                  </div>
 
-                  <div class="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form3Example8"
-                      class="form-control form-control-lg"
-                    />
-                    <label class="form-label" for="form3Example8"
-                      >Email Address</label
-                    >
-                  </div>
+                    <div class="form-outline form-white mb-4">
+                      <input
+                        type="password"
+                        id="typePasswordX"
+                        class="form-control form-control-lg"
+                        placeholder="Password"
+                        name="Password"
+                        v-model="password"
+                      />
+                      <label class="form-label" for="typePasswordX"></label>
+                      <div v-show="submitted && !password">
+                        This is a required field
+                      </div>
+                    </div>
 
-                  <div class="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form3Example9"
-                      class="form-control form-control-lg"
-                    />
-                    <label class="form-label" for="form3Example9"
-                      >Password</label
-                    >
-                  </div>
+                    <div class="form-outline form-white mb-4">
+                      <input
+                        type="password"
+                        id="typePasswordX"
+                        class="form-control form-control-lg"
+                        placeholder="Re-enter Password"
+                        name="Re-enter Password"
+                        v-model="Reenterpassword"
+                      />
+                      <label class="form-label" for="typePasswordX"></label>
+                      <div v-show="submitted && !Reenterpassword">
+                        This is a required field
+                      </div>
+                    </div>
 
-                  <div class="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form3Example90"
-                      class="form-control form-control-lg"
-                    />
-                    <label class="form-label" for="form3Example90"
-                      >Confirm Password</label
-                    >
-                  </div>
-
-                  <div class="d-flex justify-content-end pt-3">
-                    <button type="button" class="btn btn-light btn-lg">
-                      Reset all
-                    </button>
-                    <button type="button" class="btn btn-warning btn-lg ms-2">
-                      Submit form
-                    </button>
-                  </div>
+                    <div class="d-flex justify-content-around pt-3">
+                      <button type="button" class="btn btn-light btn-lg">
+                        Reset all
+                      </button>
+                      <button type="button" class="btn btn-warning btn-lg ms-2">
+                        Submit form
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
