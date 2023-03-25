@@ -63,7 +63,7 @@
               </div>
 
               <div>
-                <p class="mb-0">
+                <p class="mb-0 fs-4">
                   Don't have an account?
                   <router-link :to="{ path: '/signup' }"
                     ><a>Sign up</a></router-link

@@ -28,6 +28,9 @@
                   <h3 class="mb-5 text-uppercase text-center font-weight-bold">
                     RF Registration Form
                   </h3>
+                  <p class="text-white-50 mb-5 text-center">
+                    Please create your account
+                  </p>
 
                   <form @submit.prevent="handleSubmit">
                     <div class="row">
@@ -117,14 +120,30 @@
                     </div>
 
                     <div class="d-flex justify-content-around pt-3">
-                      <button type="button" class="btn btn-light btn-lg">
-                        Reset all
+                      <button
+                        class="btn btn-outline-light btn-lg px-5"
+                        type="submit"
+                      >
+                        Reset
                       </button>
-                      <button type="button" class="btn btn-warning btn-lg ms-2">
+                      <button
+                        class="btn btn-outline-light btn-lg px-5"
+                        type="submit"
+                      >
                         Submit form
                       </button>
                     </div>
+                    <div v-if="error">{{ error }}</div>
                   </form>
+                </div>
+
+                <div>
+                  <p class="fs-4 mb-0 text-center">
+                    Already have an account?
+                    <router-link :to="{ path: '/login' }"
+                      ><a>Log in</a></router-link
+                    >
+                  </p>
                 </div>
               </div>
             </div>
