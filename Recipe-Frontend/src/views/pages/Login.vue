@@ -65,9 +65,7 @@
               <div>
                 <p class="mb-0 fs-4">
                   Don't have an account?
-                  <router-link :to="{ path: '/signup' }"
-                    ><a>Sign up</a></router-link
-                  >
+                  <router-link :to="{ path: '/signup' }"><a>Sign up</a></router-link>
                 </p>
               </div>
             </div>
@@ -79,29 +77,47 @@
 </template>
 
 <script>
+import * as EmailValidator from 'email-validator'
+import { userService } from '../../services/users.service'
 export default {
   data() {
     return {
       email: "",
       password: "",
       submitted: false,
+      error: ""
     };
   },
   methods: {
     handleSubmit(b) {
       this.submitted = true;
       this.error = "";
+      const {email,password} = this
+      if(!(email && password)){
+        return
+      }
 
-      console.log(this.email);
-      usersService
-        .login(this.email, this.password)
-        .then((result) => {
-          this.$router.push("/dashboard");
+      if(!(EmailValidator.validate(email))){
+        this.error = "Email must be a valid email"
+        return 
+      }
+      const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      if((password_pattern.test(password)) == false){
+        this.error = "Password not strong enough"
+        return;
+      }
+      else{
+        userService.login(email,password)
+        .then(result => {
+          this.$router.push("/dashboard")
+          .then(() => 
+            location.reload())
         })
-        .catch((error) => {
-          this.error = error;
-          this.loading = false;
-        });
+        .catch(error => {
+          this.error = error 
+          this.loading = false
+        })
+      }
     },
   },
 };
