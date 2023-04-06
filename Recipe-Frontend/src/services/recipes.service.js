@@ -7,7 +7,7 @@ const getRecipe = (pantry_ingredients) => {
   url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
   params: {
     ingredients: pantry_ingredients,
-    number: '1',
+    number: '2',
     ignorePantry: 'true',
     ranking: '1'
   },
@@ -20,16 +20,8 @@ const getRecipe = (pantry_ingredients) => {
 return axios.request(options)
 .then(response => { 
   const data = response.data
-  const items = []
-  data.forEach(item => {
-    const newItem = {
-      id: item.id,
-      title: item.title,
-      image: item.image
-    }
-    items.push(newItem)
-  })
-  return items
+  const ids = data.map(item => item.id)
+  return ids
 })
 .catch(error => {
 	console.error(error)
@@ -37,6 +29,35 @@ return axios.request(options)
 });
 }
 
+const getRecipeDetails = (id) => {
+  const options = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+id+'/information',
+    headers: {
+      'X-RapidAPI-Key': API_KEY,
+      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+    }
+  };
+  
+  return axios.request(options)
+  .then(response => {
+    const data = response.data
+    const items = []
+    const item = {
+      id: id,
+      title: data.title,
+      image: data.image,
+      instructions: data.instructions
+    }
+    items.push(item)
+    return items
+  }).catch(error => {
+    console.error(error);
+    return []
+  });
+}
+
 export const recipes = {
-    getRecipe
+    getRecipe,
+    getRecipeDetails
 }

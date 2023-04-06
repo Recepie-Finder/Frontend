@@ -12,16 +12,17 @@
         Search
       </button>
     </form>
-    <div v-for="item in items" :key="item.id">
+    <div v-for="item in items">
       <ul>
         <p>{{ item.title }}</p>
+        <p>{{ item.instructions }}</p>
         <img v-bind:src="item.image" alt = "Recipe image">
       </ul>
-
     </div>
   </div>
 </template>
 <script>
+//Issue where the item.title and item.instructions and image is just not being shown on the screen
 import { recipes } from '../../services/recipes.service'
 export default {
   data(){
@@ -33,8 +34,17 @@ export default {
   methods: {
     search(){
       recipes.getRecipe(this.ingredients)
-      .then(items => {
-        this.items = items
+      .then(ids => {
+        ids.forEach(id_ => {
+          recipes.getRecipeDetails(id_)
+          .then(item => {
+            this.items.push(item)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+        })
+        console.log(this.items)
       })
       .catch(error => {
         console.error(error)
