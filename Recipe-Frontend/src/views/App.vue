@@ -2,21 +2,16 @@
   <nav class="navbar">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand font-weight-bold" style="color: #a8c7ae" href="#"
-          >Recepie finder</a
-        >
+        <a class="navbar-brand font-weight-bold" style="color: #a8c7ae;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size:3vh;font-weight: bold;" href="#">Recepie finder</a>
       </div>
-      <router-link
-        class="navbar-link"
-        style="text-decoration: none"
-        to="/dashboard"
-        >Dashboard</router-link
-      >
-      <router-link class="navbar-link" style="text-decoration: none" to="/feed"
-        >Feed</router-link
-      >
-      <router-link class="navbar-link" style="text-decoration: none" to="/"
-        >Home</router-link
+      <router-link class="navbar-link" style="text-decoration:none; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size:2.7vh; font-weight: lighter; font-variant: small-caps;" to="/">
+        h o m e
+      </router-link>
+      <router-link class="navbar-link" style="text-decoration: none; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size:2.7vh; font-weight: lighter;font-variant: small-caps;" to="/feed"
+        >f e e d
+        </router-link>
+      <router-link class="navbar-link" style="text-decoration:none; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size:2.7vh; font-weight:lighter; font-variant: small-caps;" to="/dashboard"
+        >d a s h b o a r d</router-link
       >
       <div class="nav navbar-nav navbar-right">
         <router-link
@@ -26,7 +21,7 @@
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="30"
-            height="30"
+            height="7vh"
             fill="currentColor"
             class="bi bi-person-fill"
             viewBox="0 0 16 16"
@@ -45,12 +40,12 @@
 </template>
 <style>
 .navbar {
-  background: #146166;
-  box-shadow: 0 12px 8px 0 #a8c7ae;
+  background: #0e464a;
+  box-shadow: 0 6px 20px 0 #6ca678;
 }
 
 .navbar-link {
-  color: #deddd3;
+  color: #6ca678;
 }
 
 .navbar-link:hover {

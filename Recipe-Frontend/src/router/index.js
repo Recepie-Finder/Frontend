@@ -6,10 +6,20 @@ import Dashboard from "../views/pages/Dashboard.vue";
 import Login from "../views/pages/Login.vue";
 import Signup from "../views/pages/Signup.vue";
 
+const ifAuthenticated = (to,from,next) => {
+  const loggedIn = localStorage.getItem("session_token");
+  if (loggedIn) {
+      next()
+      return
+  }
+  next('/login')
+  alert("Need to be logged in to access")
+}
+
 const routes = [
   { path: "/", component: Home },
   { path: "/feed", component: Feed },
-  { path: "/dashboard", component: Dashboard },
+  { path: "/dashboard", component: Dashboard, beforeEnter: ifAuthenticated },
   { path: "/login", component: Login },
   { path: "/signup", component: Signup },
 ];

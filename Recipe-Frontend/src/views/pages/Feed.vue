@@ -1,118 +1,46 @@
 <template>
-  <section class="h-100 gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <div
-            class="card card-registration my-4"
-            style="
-              border-radius: 1rem;
-              background-color: #146166;
-              box-shadow: 20px 20px 20px 20px #a8c7ae;
-            "
-          >
-            <div class="row g-0">
-              <div class="col-xl-6">
-                <div class="card-body p-md-5 text-black">
-                  <h3 class="mb-5 text-uppercase text-center font-weight-bold">
-                    RF Reciepe Form
-                  </h3>
-                  <p class="text-white-50 mb-5 text-center">
-                    Register a new Recepie
-                  </p>
-
-                  <form @submit.prevent="handleSubmit">
-                    <div class="form-outline form-white mb-4">
-                      <input
-                        type="Ingredients"
-                        id="text"
-                        class="form-control form-control-lg"
-                        placeholder="Ingredients"
-                        name="Ingredients"
-                        v-model="Ingredients"
-                      />
-                      <label class="form-label" for="text"></label>
-                      <div v-show="submitted && !Ingredients">
-                        This is a required field
-                      </div>
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                      <input
-                        type="Directions"
-                        id="text"
-                        class="form-control form-control-lg"
-                        placeholder="Directions"
-                        name="Directions"
-                        v-model="Directions"
-                      />
-                      <label class="form-label" for="Directions"></label>
-                      <div v-show="submitted && !Directions">
-                        This is a required field
-                      </div>
-                    </div>
-
-                    <div class="d-flex justify-content-end pt-3">
-                      <button
-                        class="btn btn-outline-light btn-lg px-5"
-                        type="submit"
-                      >
-                        Post
-                      </button>
-                    </div>
-                    <div v-if="error">{{ error }}</div>
-                  </form>
-
-                  <h1>Reciepe By User</h1>
-                  <hr class="style1" />
-                </div>
-              </div>
+    <h1 class="text-center mt-5">Feed</h1>
+ <div class="container-md" style="background-color: cadetblue; width: 55vw;">
+  <div class="row">
+    <div v-for="item in feedItems" class="mt-5">
+      <div class="card text-bg-dark mb-2">
+        <div class="row g-0">
+          <div class="col-md-4" >
+            <img v-bind:src="item.image" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.directions }}</p>
+              <p class="card-text"><small class="text-body-secondary">{{ item.date_edited }}</small></p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+ </div>
 </template>
-
 <script>
+import { feedService } from "../../services/Feed.service"
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-      submitted: false,
-    };
-  },
-  methods: {
-    handleSubmit(b) {
-      this.submitted = true;
-      this.error = "";
-
-      console.log(this.email);
-      usersService
-        .login(this.email, this.password)
-        .then((result) => {
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          this.error = error;
-          this.loading = false;
-        });
+    data(){
+        return{
+            feedItems: [],
+            error:""
+        }
     },
-  },
-};
+    mounted(){
+        feedService.getFeed()
+        .then(feed => {
+            this.feedItems = feed
+        })
+        .catch(error => this.error = error)
+    },
+    methods:{
+    }
+}
 </script>
 <style>
-.form {
-  margin-top: 120px;
-}
 
-section {
-  color: #2c2628;
-}
-
-hr.style1 {
-  border-top: 1px solid black;
-}
 </style>
