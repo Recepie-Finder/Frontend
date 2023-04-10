@@ -46,7 +46,9 @@ const getRecipeDetails = (id) => {
       id: id,
       title: data.title,
       image: data.image,
-      instructions: data.instructions
+      instructions: data.instructions,
+      information: "",
+      summary: ""
     }
     const options2 = {
       method: 'GET',
@@ -56,8 +58,16 @@ const getRecipeDetails = (id) => {
         'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
       }
     };
-    axios.request(options2).then(response => {
-      item.push(response.data.summary)
+    return axios.request(options2).then(response => {
+      const information = response.data.summary
+      item.information = information
+      if (information) {
+        const summary = information.replace(/(<([^>]+)>)/gi, '')
+        const words = summary.split(' ')
+        const limitedWords = words.slice(0,15)
+        const limitedText = limitedWords.join(' ')
+        item.summary = limitedText
+      }
       return item
     }).catch(error => {
       return error

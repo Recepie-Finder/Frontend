@@ -27,7 +27,6 @@ import { userService } from "../../services/users.service"
 export default {
   data(){
     return{
-
     }
   },
   methods:{

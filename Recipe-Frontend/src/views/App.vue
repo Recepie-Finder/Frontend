@@ -21,7 +21,7 @@
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="30"
-            height="7vh"
+            height="30"
             fill="currentColor"
             class="bi bi-person-fill"
             viewBox="0 0 16 16"

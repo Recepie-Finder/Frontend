@@ -52,7 +52,7 @@
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">{{ item.title }}</h5>
-              <p class="card-text">{{ item.summary }}</p>
+              <p class="card-text">{{ item.summary }} . . . .</p>
             </div>
           </div>
         </div>
@@ -64,19 +64,18 @@
 
 </template>
 <script>
-//Issue where the item.title and item.instructions and image is just not being shown on the screen
 import { recipes } from '../../services/recipes.service'
 export default {
   data(){
     return{
-      ingredients: [],//need to concatinate string
+      ingredients: [],
       items: [],
-      query: ''
+      query: '',
     }
   },
   methods: {
     search(){
-      recipes.getRecipe(this.ingredients.join(","))
+      recipes.getRecipe(this.ingredients.join(','))
       .then(ids => {
         ids.forEach(id_ => {
           recipes.getRecipeDetails(id_)

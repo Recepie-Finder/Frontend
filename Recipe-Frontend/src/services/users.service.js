@@ -56,7 +56,38 @@ const logout = () => {
     })
 }
 
+const createNewUser = (first_name,last_name,email,password) => {
+    return fetch("http://localhost:3333/register",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Authorization": localStorage.getItem("session_token")
+        },
+        body: JSON.stringify({
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "password": password
+        })
+    })
+    .then((response) => {
+        if(response.status === 201){
+            return response.json()
+        }else if(response.status === 400){
+            throw "Bad data provided"
+        }else{
+            throw "Something went wrong"
+        }
+    })
+    .catch((error) => {
+        console.log("Err",error)
+        return Promise.reject(error)
+    })
+}
+
 export const userService = {
     login,
-    logout
+    logout,
+    createNewUser
 }

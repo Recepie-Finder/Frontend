@@ -17,10 +17,8 @@
                   src="https://hips.hearstapps.com/hmg-prod/images/delish-190814-mcdonalds-apple-pies-0283-portrait-pf-1566604978.jpg"
                   alt="Sample photo"
                   class="img-fluid"
-                  style="
-                    border-top-left-radius: 0.25rem;
-                    border-bottom-left-radius: 0.25rem;
-                  "
+                  style="border-top-left-radius: 0.25rem;
+                    border-bottom-left-radius: 0.25rem;"
                 />
               </div>
               <div class="col-xl-6">
@@ -32,7 +30,7 @@
                     Please create your account
                   </p>
 
-                  <form @submit.prevent="handleSubmit">
+                  <div>
                     <div class="row">
                       <div class="form-white col-md-6 mb-4">
                         <div class="form-outline">
@@ -41,14 +39,14 @@
                             id="form3Example1m"
                             class="form-control form-control-lg"
                             placeholder="First Name"
-                            name="First Name"
-                            v-model="FirstName"
+                            name="first_name"
+                            v-model="first_name"
                           />
                           <label
                             class="form-label"
                             for="form3Example1m"
                           ></label>
-                          <div v-show="submitted && !FirstName">
+                          <div v-show="submitted && !first_name">
                             This is a required field
                           </div>
                         </div>
@@ -60,14 +58,14 @@
                             id="form3Example1n"
                             class="form-control form-control-lg"
                             placeholder="Last Name"
-                            name="Last Name"
-                            v-model="LastName"
+                            name="last_name"
+                            v-model="last_name"
                           />
                           <label
                             class="form-label"
                             for="form3Example1n"
                           ></label>
-                          <div v-show="submitted && !LastName">
+                          <div v-show="submitted && !last_name">
                             This is a required field
                           </div>
                         </div>
@@ -87,6 +85,9 @@
                       <div v-show="submitted && !email">
                         This is a required field
                       </div>
+                      <div v-show="email && !isValidEmail">
+                        please enter a valid email
+                      </div>
                     </div>
 
                     <div class="form-outline form-white mb-4">
@@ -95,7 +96,7 @@
                         id="typePasswordX"
                         class="form-control form-control-lg"
                         placeholder="Password"
-                        name="Password"
+                        name="password"
                         v-model="password"
                       />
                       <label class="form-label" for="typePasswordX"></label>
@@ -104,7 +105,7 @@
                       </div>
                     </div>
 
-                    <div class="form-outline form-white mb-4">
+                   <!--  <div class="form-outline form-white mb-4">
                       <input
                         type="password"
                         id="typePasswordX"
@@ -117,7 +118,7 @@
                       <div v-show="submitted && !Reenterpassword">
                         This is a required field
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="d-flex justify-content-around pt-3">
                       <button
@@ -127,6 +128,7 @@
                         Reset
                       </button>
                       <button
+                        v-on:click="submit_form"
                         class="btn btn-outline-light btn-lg px-5"
                         type="submit"
                       >
@@ -134,7 +136,7 @@
                       </button>
                     </div>
                     <div v-if="error">{{ error }}</div>
-                  </form>
+                  </div>
                 </div>
 
                 <div>
@@ -155,30 +157,45 @@
 </template>
 
 <script>
+import * as EmailValidator from 'email-validator';
+import { userService } from '../../services/users.service';
 export default {
   data() {
     return {
       email: "",
       password: "",
+      first_name: "",
+      last_name: "",
       submitted: false,
+      success: false,
+      isValidEmail: true,
+      error: ""
     };
   },
   methods: {
-    handleSubmit(b) {
-      this.submitted = true;
-      this.error = "";
+    submit_form(){
+      this.submitted = true
+      this.error = ""
+      const {email,password,first_name,last_name} = this
+      if(!(email && password && first_name,last_name)){
+        return
+      }
 
-      console.log(this.email);
-      usersService
-        .login(this.email, this.password)
-        .then((result) => {
-          this.$router.push("/login");
+      if(!(EmailValidator.validate(email))){
+        this.isValidEmail = false
+        return
+      }
+      else{
+        userService.createNewUser(first_name,last_name,email,password)
+        .then(() => {
+          this.success = true
+          this.$router.push("/login")
         })
-        .catch((error) => {
-          this.error = error;
-          this.loading = false;
-        });
-    },
+        .catch((err) => {
+          this.error = err
+        })
+      }
+    }
   },
 };
 </script>
