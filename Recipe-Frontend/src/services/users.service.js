@@ -45,8 +45,14 @@ const logout = () => {
             localStorage.removeItem("session_token")
             return
         }else if(response.status === 401){
+            if(localStorage.getItem("user_id")){
+                localStorage.removeItem("user_id")
+                localStorage.removeItem("session_token")
+            }
             throw "Not logged in"
         }else{
+            localStorage.removeItem("user_id")
+            localStorage.removeItem("session_token")
             throw "Something went wrong"
         }
     })

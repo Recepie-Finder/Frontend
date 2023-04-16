@@ -9,7 +9,7 @@
           >
             <div
               class="card-body p-5 text-center"
-              style="box-shadow: 20px 20px 20px 20px #a8c7ae"
+              style="box-shadow: 3px 8px 20px 10px #a8c7ae"
             >
               <div class="mb-md-5 mt-md-4 pb-5">
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>

@@ -77,8 +77,116 @@ const getRecipeDetails = (id) => {
     return []
   });
 }
+const saveRecipe = (id,image,title,ingredients,directions,date,created_by) => {
+  return fetch("http://localhost:3333/recipeSave",
+  {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "X-Authorization": localStorage.getItem("session_token")
+      },
+      body: JSON.stringify({
+          "recipe_id": id,
+          "image": image,
+          "title": title,
+          "ingredients": ingredients,
+          "directions": directions,
+          "date_published": date,
+          "created_by": created_by
+      })
+  })
+  .then((response) => {
+      if(response.status === 201){
+          return response.json()
+      }else if(response.status === 400){
+          throw "Duplicate Item"
+      }else{
+          throw "Something went wrong"
+      }
+  })
+  .catch((error) => {
+      console.log("Err",error)
+      return Promise.reject(error)
+  })
+}
+
+const getSavedRecipes = () => {
+  return fetch("http://localhost:3333/recipeSave",
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Authorization": localStorage.getItem("session_token")
+        }
+    })
+    .then((response) => {
+        if(response.status === 200){
+            return response.json()
+        }else{
+            throw "Something went wrong"
+        }
+    })
+    .then((resJson) => {
+        return resJson
+    })
+    .catch((error) => {
+        console.log("Err", error)
+        return Promise.reject(error)
+    })
+}
+const deleteSavedRecipe = (id) =>{
+  return fetch("http://localhost:3333/recipeSave/"+id,
+  {
+      method: "DELETE",
+      headers: {
+          "X-Authorization": localStorage.getItem("session_token")
+      }
+  })
+  .then((response) => {
+      if(response.status === 200){
+          return;
+      }else if(response.status === 401){
+          throw "Must be logged in to delete"
+      }else{
+          throw "Server err"
+      }
+  })
+  .catch((error) => {
+      console.log('Err', error)
+      return Promise.reject(error)
+  })
+}
+
+const getUsersRecipes = () => {
+  return fetch("http://localhost:3333/recipesByUser",
+  {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "X-Authorization": localStorage.getItem("session_token")
+    }
+})
+.then((response) => {
+    if(response.status === 200){
+        return response.json()
+    }else{
+        throw "Something went wrong"
+    }
+})
+.then((resJson) => {
+    return resJson
+})
+.catch((error) => {
+    console.log("Err", error)
+    return Promise.reject(error)
+})
+}
 
 export const recipes = {
     getRecipe,
     getRecipeDetails,
+    saveRecipe,
+    getSavedRecipes,
+    deleteSavedRecipe,
+    getUsersRecipes
 }

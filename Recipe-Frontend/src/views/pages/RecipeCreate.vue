@@ -24,19 +24,32 @@
                   <form @submit.prevent="handleSubmit">
                     <div class="form-outline form-white mb-4">
                       <input
+                        type="Title"
+                        id="text"
+                        class="form-control form-control-lg"
+                        placeholder="Title"
+                        name="Title"
+                        v-model="title"
+                      />
+                      <label class="form-label" for="text"></label>
+                      <div v-show="submitted && !title">
+                        This is a required field
+                      </div>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <input
                         type="Ingredients"
                         id="text"
                         class="form-control form-control-lg"
                         placeholder="Ingredients"
                         name="Ingredients"
-                        v-model="Ingredients"
+                        v-model="ingredients"
                       />
                       <label class="form-label" for="text"></label>
-                      <div v-show="submitted && !Ingredients">
+                      <div v-show="submitted && !ingredients">
                         This is a required field
                       </div>
                     </div>
-
                     <div class="form-outline form-white mb-4">
                       <input
                         type="Directions"
@@ -44,15 +57,29 @@
                         class="form-control form-control-lg"
                         placeholder="Directions"
                         name="Directions"
-                        v-model="Directions"
+                        v-model="directions"
                       />
                       <label class="form-label" for="Directions"></label>
-                      <div v-show="submitted && !Directions">
+                      <div v-show="submitted && !directions">
+                        This is a required field
+                      </div>
+                    </div>
+                    <div class="form-outline form-white mb-2">
+                      <input
+                        type="text"
+                        id="text"
+                        class="form-control form-control-lg"
+                        placeholder="Image - URL"
+                        name="Image"
+                        v-model="image"
+                      />
+                      <label class="form-label" for="Directions"></label>
+                      <div v-show="submitted && !image">
                         This is a required field
                       </div>
                     </div>
 
-                    <div class="d-flex justify-content-end pt-3">
+                    <div class="d-flex justify-content-center mb-3 pt-3">
                       <button
                         class="btn btn-outline-light btn-lg px-5"
                         type="submit"
@@ -76,10 +103,15 @@
 </template>
 
 <script>
-//UNUSED FILE
+import { feedService } from '../../services/feed.service'
 export default {
   data() {
     return {
+      error:"",
+      image:"",
+      title: "",
+      ingredients: "",
+      directions: "",
       email: "",
       password: "",
       submitted: false,
@@ -87,20 +119,13 @@ export default {
   },
   methods: {
     handleSubmit(b) {
-      this.submitted = true;
-      this.error = "";
-
-      console.log(this.email);
-      usersService
-        .login(this.email, this.password)
-        .then((result) => {
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          this.error = error;
-          this.loading = false;
-        });
+      feedService.postTo(this.title,this.ingredients,this.directions,this.image)
+      .then(() => {
+        this.$router.push('/dashboard')
+      })
+      .catch(error => this.error = error)
     },
+
   },
 };
 </script>

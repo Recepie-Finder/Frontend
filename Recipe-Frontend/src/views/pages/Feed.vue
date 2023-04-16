@@ -2,8 +2,7 @@
     <h1 class="text-center mt-5">Feed</h1>
  <div class="container-md" style="background-color: cadetblue; width: 55vw;">
   <div class="row">
-    <router-link :to="'/recipes/' + item.recipe_id" v-for="item in feedItems" class="mt-5">
-      <a href="/">
+    <router-link :to="'/recipes/' + item.recipe_id" v-for="item in feedItems" class="mt-5" style="text-decoration: none;">
       <div class="card text-bg-dark mb-2">
         <div class="row g-0">
           <div class="col-md-4" >
@@ -18,13 +17,12 @@
           </div>
         </div>
       </div>
-    </a>
     </router-link>
   </div>
  </div>
 </template>
 <script>
-import { feedService } from '../../services/Feed.service'
+import { feedService } from '../../services/feed.service'
 export default {
     data(){
         return{
