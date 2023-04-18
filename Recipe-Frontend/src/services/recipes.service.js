@@ -63,6 +63,7 @@ const getRecipeDetails = (id) => {
       item.information = information
       if (information) {
         const summary = information.replace(/(<([^>]+)>)/gi, '')
+        item.information = summary
         const words = summary.split(' ')
         const limitedWords = words.slice(0,15)
         const limitedText = limitedWords.join(' ')
@@ -99,7 +100,7 @@ const saveRecipe = (id,image,title,ingredients,directions,date,created_by) => {
       if(response.status === 201){
           return response.json()
       }else if(response.status === 400){
-          throw "Duplicate Item"
+          throw "Duplicate Data"
       }else{
           throw "Something went wrong"
       }

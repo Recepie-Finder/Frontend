@@ -13,7 +13,7 @@
       <div class="container-md mt-5" style="background-color: cadetblue; width: 40vw;">
   <div class="row" v-for="item in savedRecipes">
     <div class="col-md-10">
-      <router-link :to="'/recipes/' + item.recipe_id" class="mt-5" style="text-decoration: none; display: flex; flex-wrap: wrap; align-items: center;">
+      <router-link :to="'/recipes/' + item.saved_by" class="mt-5" style="text-decoration: none; display: flex; flex-wrap: wrap; align-items: center;">
         <div class="card text-bg-dark mb-2" style="flex: 1 1 0;">
           <div class="row g-0">
             <div class="col-md-4">
@@ -30,7 +30,7 @@
       </router-link>
     </div>
     <div class="col-md-2 d-flex align-items-center mt-5">
-      <button v-on:click="clicked(item.recipe_id)" class="btn btn-danger" style="width: 50%;margin-left: -2vw;height: 80%;">X</button>
+      <button v-on:click="clicked(item.saved_id)" class="btn btn-danger" style="width: 50%;margin-left: -2vw;height: 80%;">X</button>
     </div>
   </div>
 </div>
@@ -80,11 +80,13 @@ export default {
     }
   },
   mounted(){
+    //this.savedRecipes.directions.replace(/<b>/g, "");
+    //this.savedRecipes.directions.replace(/<\/b>/g, ""); 
     recipes.getSavedRecipes()
     .then((results) => {
       this.savedRecipes.push(...results)
-      for(item in savedRecipes){
-        const words = item.directions.split(' ')
+      for(const item of this.savedRecipes){
+        const words = item.split(' ')
         const limitedWords = words.slice(0,10)
         const limitedText = limitedWords.join(' ')
         item.directions = limitedText

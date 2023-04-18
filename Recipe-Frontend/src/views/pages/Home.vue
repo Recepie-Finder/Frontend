@@ -26,7 +26,7 @@
    </div>
    <div class="container-md">
   <div class="row">
-    <a v-for="item in items" class="mt-3" style="text-decoration: none;" v-on:click="recipe_show(item.title,item.image,item.information,item.instructions)">
+    <a v-for="item in items" class="mt-3" style="text-decoration: none;">
       <div class="card text-bg-dark mb-2">
         <div class="row g-0">
           <div class="col-md-4">
@@ -36,7 +36,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ item.title }}</h5>
               <p class="card-text">{{ item.summary }} . . . .</p>
-              <button v-on:click="SaveRecipe(item.id,item.image,item.title,item.instructions,item.information,'NULL','NULL')" type="button" class="btn btn-outline-success w-100 p-0">+</button>
+              <button v-on:click="SaveRecipe(item.image,item.title,item.instructions,item.information,item.id)" type="button" class="btn btn-outline-success w-100 p-0">+</button>
             </div>
           </div>
         </div>
@@ -105,10 +105,10 @@ export default {
         this.ingredients.splice(index,1)
       }
     },
-    SaveRecipe(id,image,title,instructions,information,date,created_by){
-            recipes.saveRecipe(id,image,title,instructions,information,date,created_by)
+    SaveRecipe(image,title,ingredients,directions,created_by){
+      console.log(image,title,ingredients,directions,created_by)
+            recipes.saveRecipe(null,image,title,ingredients,directions,null,created_by)
             .then(() => {
-                this.success = true
                 this.$router.push("/dashboard")
             })
             .catch((err) => {
